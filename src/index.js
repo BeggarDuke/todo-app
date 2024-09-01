@@ -1,9 +1,12 @@
 import "./styles.css";
 
-const projects = [];
+// const projects store all instances of class Project
+const projects = []; 
 let currentProject;
 let currentTask;
+// Class Project allow user to create instances, that contain tasks belong for specific project
 class Project {
+    // public field items store all instances of class Task inside project
     items = [];
     constructor(name, tags) {
         this.name = name;
@@ -13,6 +16,7 @@ class Project {
         currentProject = this;
     }
 }
+// class Task is a straightforward classical to-do task list
 class Task {
     list = [];
     constructor(name, tags) {
@@ -26,7 +30,8 @@ class Task {
         currentTask = this;
     }
 }
-
+// class TextBlock is a one text line inside of instance of class Task
+// not sure about this implementation of text inside of task, but it seems fun for now and i want to try it 
 class TextBlock {
     constructor(text, type, margin) {
         this.text = text;
@@ -51,9 +56,9 @@ class TextBlock {
 
 function createProject(name) {
     projects.push(new Project(name));
-    currentProject = projects[projects.length-1];
+    projects[projects.length-1].MakeCurrentProject();
 }
 
-function createTask() {
-    currentProject.items.push(new Task("testing"));
+function createTask(name) {
+    currentProject.items.push(new Task(name));
 }
