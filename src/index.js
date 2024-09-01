@@ -4,9 +4,9 @@ import "./styles.css";
 const projects = []; 
 let currentProject;
 let currentTask;
-// Class Project allow user to create instances, that contain tasks belong for specific project
+// Class Project allow user to create instances, that contain tasks related to a specific project
 class Project {
-    // public field items store all instances of class Task inside project
+    // public field items store all instances of class Task inside a project
     items = [];
     constructor(name, tags) {
         this.name = name;
@@ -18,6 +18,7 @@ class Project {
 }
 // class Task is a straightforward classical to-do task list
 class Task {
+    // public field list store all instances of class textBlock inside a task
     list = [];
     constructor(name, tags) {
         this.name = name;
