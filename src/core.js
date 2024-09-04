@@ -1,35 +1,49 @@
-// const projects store all instances of class Project
-const projects = []; 
-let currentProject;
-let currentTask;
-// Class Project allow user to create instances, that contain tasks related to a specific project
+// Class "Project" allow user to create instances, that contain tasks related to a specific project
 class Project {
-    // public field items store all instances of class Task inside a project
-    items = [];
+    // private static field "projects" store all instances of class Project
+    static #projects = [];
+    static #currentProject;
+    // private field "items" store all instances of class Task inside a project
+    #items = [];
     constructor(name, tags) {
         this.name = name;
         this.tags = tags;
     }
-    MakeCurrentProject() {
-        currentProject = this;
+    static createProject(name, tags) {
+        this.#projects.push(new Project(name, tags));
+    }
+    static getProjectsList() {
+        return this.#projects;
+    }
+    static getCurrentProject() {
+        return this.#currentProject;
+    }
+    setCurrentProject() {
+        Project.#currentProject = this;
+    }
+    getTaskList() {
+        return this.#items;
     }
     createTask(name, tags) {
-        this.items.push(new Task(name, tags));
+        this.#items.push(new Task(name, tags));
     }
 }
-// class Task is a straightforward classical to-do task list
+// class "Task" is a straightforward classical to-do task list
 class Task {
-    // public field list store all instances of class textBlock inside a task
-    list = [];
+    // private field "list" store all instances of class textBlock inside a task
+    #list = [];
     constructor(name, tags) {
         this.name = name;
         this.tags = tags;
     }
     addTextBlock(text, type, margin) {
-        this.list.push(new TextBlock(text, type, margin));
+        this.#list.push(new TextBlock(text, type, margin));
     }
     MakeCurrentTask() {
         currentTask = this;
+    }
+    getTextList() {
+        return this.#list;
     }
 }
 // class TextBlock is a one text line inside of instance of class Task
@@ -56,8 +70,4 @@ class TextBlock {
     }
 }
 
-function createProject(name, tags) {
-    projects.push(new Project(name, tags));
-}
-
-export { projects, currentProject, currentTask, createProject };
+export { Project, Task, TextBlock };
