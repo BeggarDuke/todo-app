@@ -1,3 +1,5 @@
+import { domMethods } from "./ui";
+
 // Class "Project" allow user to create instances, that contain tasks related to a specific project
 class Project {
     // private static field "projects" store all instances of class Project
@@ -11,6 +13,7 @@ class Project {
     }
     static createProject(name, tags) {
         this.#projects.push(new Project(name, tags));
+        domMethods.addNewProject(this.getProjectsList());
     }
     static getProjectsList() {
         return this.#projects;
@@ -30,6 +33,7 @@ class Project {
 }
 // class "Task" is a straightforward classical to-do task list
 class Task {
+    static #currentTask;
     // private field "list" store all instances of class textBlock inside a task
     #list = [];
     constructor(name, tags) {
@@ -39,8 +43,11 @@ class Task {
     addTextBlock(text, type, margin) {
         this.#list.push(new TextBlock(text, type, margin));
     }
-    MakeCurrentTask() {
-        currentTask = this;
+    static getCurrentTask() {
+        return this.#currentTask;
+    }
+    setCurrentTask() {
+        Task.#currentTask = this;
     }
     getTextList() {
         return this.#list;

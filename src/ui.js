@@ -1,5 +1,3 @@
-import { Project, Task, TextBlock } from "./core.js";
-
 export function ui() {
     const mainContainer = Object.assign(document.createElement("div"), {className: "main-container"});
 
@@ -25,12 +23,12 @@ export function ui() {
 }
 
 export const domMethods = {
-    addNewProject: function() {
+    addNewProject: function(projectsList) {
         const project = Object.assign(document.createElement("div"), 
-        {className: `project project${Project.getProjectsList().length-1}`});
+        {className: `project project${projectsList.length-1}`});
 
         project.appendChild(Object.assign(document.createElement("h4"), 
-        {textContent: `${Project.getProjectsList()[Project.getProjectsList().length-1].name}`}));
+        {textContent: `${projectsList[projectsList.length-1].name}`}));
 
         document.querySelector(".projects-list").appendChild(project);
     }
