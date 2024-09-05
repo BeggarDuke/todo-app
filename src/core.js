@@ -1,4 +1,4 @@
-import { domMethods } from "./ui";
+// import { domMethods } from "./ui";
 
 // Class "Project" allow user to create instances, that contain tasks related to a specific project
 class Project {
@@ -13,22 +13,35 @@ class Project {
     }
     static createProject(name, tags) {
         this.#projects.push(new Project(name, tags));
-        domMethods.addNewProject(this.getProjectsList());
+        // domMethods.addNewProject(this.getProjectsList());
     }
     static getProjectsList() {
+        console.log(this.#projects);
         return this.#projects;
     }
     static getCurrentProject() {
+        console.log(this.#currentProject);
         return this.#currentProject;
     }
     setCurrentProject() {
         Project.#currentProject = this;
     }
     getTaskList() {
+        console.log(this.#items);
         return this.#items;
     }
     createTask(name, tags) {
         this.#items.push(new Task(name, tags));
+    }
+    editProject(newName, newTags) {
+        if (newName === null) return;
+        this.name = newName;
+        if (newTags === null) {
+            return;
+        }
+        else {
+            this.tags = newTags;
+        }
     }
 }
 // class "Task" is a straightforward classical to-do task list
@@ -40,17 +53,29 @@ class Task {
         this.name = name;
         this.tags = tags;
     }
-    addTextBlock(text, type, margin) {
-        this.#list.push(new TextBlock(text, type, margin));
-    }
     static getCurrentTask() {
+        console.log(this.#currentTask);
         return this.#currentTask;
     }
     setCurrentTask() {
         Task.#currentTask = this;
     }
     getTextList() {
+        console.log(this.#list);
         return this.#list;
+    }
+    addTextBlock(text, type, margin) {
+        this.#list.push(new TextBlock(text, type, margin));
+    }
+    editTask(newName, newTags) {
+        if (newName === null) return;
+        this.name = newName;
+        if (newTags === null) {
+            return;
+        }
+        else {
+            this.tags = newTags;
+        }
     }
 }
 // class TextBlock is a one text line inside of instance of class Task
