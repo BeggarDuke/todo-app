@@ -57,11 +57,11 @@ class Task {
     creationDate = datesMethods.setCreationDate();
     // field "list" store all instances of class textBlock inside a task
     list = [];
-    constructor(name, tags) {
+    constructor(name, tags, beginDate, endDate) {
         this.name = name;
         this.tags = tags;
-        this.beginDate = datesMethods.setBeginDate();
-        this.endDate = datesMethods.setEndDate();
+        this.beginDate = datesMethods.setBeginDate(beginDate);
+        this.endDate = datesMethods.setEndDate(endDate);
     }
     static getCurrentTask() {
         console.log(Task.#currentTask);
