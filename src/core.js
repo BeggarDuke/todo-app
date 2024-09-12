@@ -1,37 +1,44 @@
 // import { domMethods } from "./ui";
+import { datesMethods } from "./dates";
 
 // Class "Project" allow user to create instances, that contain tasks related to a specific project
 class Project {
-    // private static field "projects" store all instances of class Project
-    static #projects = [];
+    // static field "projects" store all instances of class Project
+    static projects = [];
     static #currentProject;
-    // private field "items" store all instances of class Task inside a project
-    #items = [];
+    // field "items" store all instances of class Task inside a project
+    items = [];
     constructor(name, tags) {
         this.name = name;
         this.tags = tags;
     }
     static createProject(name, tags) {
-        this.#projects.push(new Project(name, tags));
+        Project.projects.push(new Project(name, tags));
         // domMethods.addNewProject(this.getProjectsList());
     }
     static getProjectsList() {
-        console.log(this.#projects);
-        return this.#projects;
+        console.log(Project.projects);
+        return Project.projects;
     }
     static getCurrentProject() {
-        console.log(this.#currentProject);
-        return this.#currentProject;
+        console.log(Project.#currentProject);
+        return Project.#currentProject;
+    }
+    static getLocalStorage() {
+        Project.projects = JSON.parse(localStorage.getItem("projects"));
+    }
+    static setLocalStorage() {
+        localStorage.setItem("projects", JSON.stringify(Project.projects));
     }
     setCurrentProject() {
         Project.#currentProject = this;
     }
     getTaskList() {
-        console.log(this.#items);
-        return this.#items;
+        console.log(this.items);
+        return this.items;
     }
     createTask(name, tags) {
-        this.#items.push(new Task(name, tags));
+        this.items.push(new Task(name, tags));
     }
     editProject(newName, newTags) {
         if (newName === null) return;
@@ -47,25 +54,28 @@ class Project {
 // class "Task" is a straightforward classical to-do task list
 class Task {
     static #currentTask;
-    // private field "list" store all instances of class textBlock inside a task
-    #list = [];
+    creationDate = datesMethods.setCreationDate();
+    // field "list" store all instances of class textBlock inside a task
+    list = [];
     constructor(name, tags) {
         this.name = name;
         this.tags = tags;
+        this.beginDate = datesMethods.setBeginDate();
+        this.endDate = datesMethods.setEndDate();
     }
     static getCurrentTask() {
-        console.log(this.#currentTask);
-        return this.#currentTask;
+        console.log(Task.#currentTask);
+        return Task.#currentTask;
     }
     setCurrentTask() {
         Task.#currentTask = this;
     }
     getTextList() {
-        console.log(this.#list);
-        return this.#list;
+        console.log(this.list);
+        return this.list;
     }
     addTextBlock(text, type, margin) {
-        this.#list.push(new TextBlock(text, type, margin));
+        this.list.push(new TextBlock(text, type, margin));
     }
     editTask(newName, newTags) {
         if (newName === null) return;
