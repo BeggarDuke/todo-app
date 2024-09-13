@@ -43,7 +43,7 @@ export const domMethods = {
             projectCard.appendChild(Object.assign(document.createElement("button"),
             {textContent: "Remove project", type: "button", className: "project-buttons rm-project"}));
             document.querySelector(".projects-list").appendChild(projectCard);
-            uniqueListeners.projectButtons(projectCard, projects[i]);
+            uniqueListeners.projectButtons(projectCard, projects[i], i);
         }
     },
 }

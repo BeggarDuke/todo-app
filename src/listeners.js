@@ -11,9 +11,12 @@ export function mainListeners(){
     });
 }
 export const uniqueListeners = {
-    projectButtons: function(uiElement, project) {
+    projectButtons: function(uiElement, project, index) {
         uiElement.querySelector(".add-task").addEventListener("click", () => {
             project.createTask("test", "test test test");
+        });
+        uiElement.querySelector(".rm-project").addEventListener("click", () => {
+            Project.removeProject(index);
         });
     }
 }

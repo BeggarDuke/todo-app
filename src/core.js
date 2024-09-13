@@ -16,6 +16,10 @@ class Project {
         Project.projects.push(new Project(name, tags));
         domMethods.addProjectsCards(Project.getProjectsList());
     }
+    static removeProject(project) {
+        Project.projects.splice(project, 1);
+        domMethods.addProjectsCards(Project.getProjectsList());
+    }
     static getProjectsList() {
         console.log(Project.projects);
         return Project.projects;
