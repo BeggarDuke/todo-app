@@ -1,4 +1,4 @@
-// import { domMethods } from "./ui";
+import { domMethods } from "./ui";
 import { datesMethods } from "./dates";
 
 // Class "Project" allow user to create instances, that contain tasks related to a specific project
@@ -14,7 +14,7 @@ class Project {
     }
     static createProject(name, tags) {
         Project.projects.push(new Project(name, tags));
-        // domMethods.addNewProject(this.getProjectsList());
+        domMethods.addProjectsCards(Project.getProjectsList());
     }
     static getProjectsList() {
         console.log(Project.projects);
@@ -112,4 +112,4 @@ class TextBlock {
     }
 }
 
-export { Project, Task, TextBlock };
+export { Project };

@@ -1,6 +1,6 @@
 import "./styles.css";
 import { ui } from "./ui.js";
-import { listeners } from "./listeners.js";
+import { mainListeners } from "./listeners.js";
 import { Project } from "./core.js";
 
 function getLocalStorage() {
@@ -30,18 +30,6 @@ function getLocalStorage() {
     }
 }
 
-// ui();
-// listeners();
-// localStorage.clear();
-// getLocalStorage();
-
-Project.createProject("test");
-Project.getProjectsList()[0].setCurrentProject();
-Project.getCurrentProject().createTask("tost");
-Project.getCurrentProject().getTaskList()[0].addTextBlock("blabla", "checkbox", "0");
-Project.getCurrentProject().getTaskList()[0].getTextList();
-Project.getCurrentProject().getTaskList()[0].getTextList()[0].changeText("ogogo");
-Project.getCurrentProject().getTaskList()[0].getTextList();
-Project.createProject("test2");
-// Project.setLocalStorage("projects", JSON.stringify(Project.getProjectsList()));
-console.log(Project.getProjectsList());
+ui();
+mainListeners();
+getLocalStorage();

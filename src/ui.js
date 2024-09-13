@@ -1,3 +1,5 @@
+import { uniqueListeners } from "./listeners";
+
 export function ui() {
     const mainContainer = Object.assign(document.createElement("div"), {className: "main-container"});
 
@@ -23,13 +25,25 @@ export function ui() {
 }
 
 export const domMethods = {
-    addNewProject: function(projectsList) {
-        const project = Object.assign(document.createElement("div"), 
-        {className: `project project${projectsList.length-1}`});
+    addProjectsCards: function(projects) {
+        const container = document.querySelector(".projects-list");
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
 
-        project.appendChild(Object.assign(document.createElement("h4"), 
-        {textContent: `${projectsList[projectsList.length-1].name}`}));
-
-        document.querySelector(".projects-list").appendChild(project);
-    }
+        for (let i=0; i<projects.length; i++) {
+            let projectCard = Object.assign(document.createElement("div"),
+            {className: `project project${i}`});
+            projectCard.appendChild(Object.assign(document.createElement("h2"),
+            {textContent: `${projects[i].name}`}));
+            projectCard.appendChild(Object.assign(document.createElement("p"),
+            {textContent: `${projects[i].tags}`}));
+            projectCard.appendChild(Object.assign(document.createElement("button"),
+            {textContent: "Add task", type: "button", className: "project-buttons add-task"}));
+            projectCard.appendChild(Object.assign(document.createElement("button"),
+            {textContent: "Remove project", type: "button", className: "project-buttons rm-project"}));
+            document.querySelector(".projects-list").appendChild(projectCard);
+            uniqueListeners.projectButtons(projectCard, projects[i]);
+        }
+    },
 }
