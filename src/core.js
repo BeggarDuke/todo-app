@@ -32,7 +32,42 @@ class Project {
         Project.#currentProject = this;
     }
     static getLocalStorage() {
-        Project.#projects = JSON.parse(localStorage.getItem("projects"));
+        if (!localStorage.getItem("projects")) return;
+        let data = JSON.parse(localStorage.getItem("projects"));
+        for (let i=0; i<data.length; i++) {
+            Project.createProject(
+                data[i].name,
+                data[i].tags
+            );
+            for(let j=0; j<data[i].items.length; j++) {
+                let beginDate;
+                let endDate;
+                if (data[i].items[j].beginDate) {
+                    beginDate = data[i].items[j].beginDate.date;
+                }
+                if (data[i].items[j].endDate) {
+                    endDate = data[i].items[j].endDate.date;
+                }
+                Project.getProjectsList()[i].createTask(
+                    data[i].items[j].name,
+                    data[i].items[j].tags,
+                    beginDate,
+                    endDate,
+                );
+                Project.getProjectsList()[i].items[j].creationDate = {
+                    date: new Date(data[i].items[j].creationDate.date),
+                    formattedDate: data[i].items[j].creationDate.formattedDate,
+                };
+                for (let k=0; k<data[i].items[j].list.length; k++) {
+                    Project.getProjectsList()[i].items[j].addTextBlock(
+                        data[i].items[j].list[k].text,
+                        data[i].items[j].list[k].type,
+                        data[i].items[j].list[k].margin,
+                    );
+                }
+            }
+        }
+        console.log(Project.getProjectsList());
     }
     static setLocalStorage() {
         localStorage.setItem("projects", JSON.stringify(Project.getProjectsList()));
