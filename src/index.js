@@ -1,7 +1,7 @@
 import "./styles.css";
-import { mainListeners } from "./listeners.js";
+import { listeners } from "./ui.js";
 import { Project } from "./core.js";
 
-mainListeners();
+listeners.mainListeners();
 Project.getLocalStorage();
-// localStorage.clear();
+localStorage.clear();
