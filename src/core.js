@@ -4,7 +4,7 @@ import { datesMethods } from "./dates";
 // Class "Project" allow user to create instances, that contain tasks related to a specific project
 class Project {
     // static field "projects" store all instances of class Project
-    static projects = [];
+    static #projects = [];
     static #currentProject;
     // field "items" store all instances of class Task inside a project
     items = [];
@@ -13,36 +13,36 @@ class Project {
         this.tags = tags;
     }
     static createProject(name, tags) {
-        Project.projects.push(new Project(name, tags));
+        Project.getProjectsList().push(new Project(name, tags));
         domMethods.addProjectsCards(Project.getProjectsList());
     }
     static removeProject(project) {
-        Project.projects.splice(project, 1);
+        Project.getProjectsList().splice(project, 1);
         domMethods.addProjectsCards(Project.getProjectsList());
     }
     static getProjectsList() {
-        console.log(Project.projects);
-        return Project.projects;
+        console.log(Project.#projects);
+        return Project.#projects;
     }
     static getCurrentProject() {
         console.log(Project.#currentProject);
         return Project.#currentProject;
     }
-    static getLocalStorage() {
-        Project.projects = JSON.parse(localStorage.getItem("projects"));
-    }
-    static setLocalStorage() {
-        localStorage.setItem("projects", JSON.stringify(Project.projects));
-    }
     setCurrentProject() {
         Project.#currentProject = this;
+    }
+    static getLocalStorage() {
+        Project.#projects = JSON.parse(localStorage.getItem("projects"));
+    }
+    static setLocalStorage() {
+        localStorage.setItem("projects", JSON.stringify(Project.getProjectsList()));
     }
     getTaskList() {
         console.log(this.items);
         return this.items;
     }
-    createTask(name, tags) {
-        this.items.push(new Task(name, tags));
+    createTask(name, tags, beginDate, endDate) {
+        this.items.push(new Task(name, tags, beginDate, endDate));
     }
     editProject(newName, newTags) {
         if (newName === null) return;

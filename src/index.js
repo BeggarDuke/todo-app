@@ -1,5 +1,4 @@
 import "./styles.css";
-import { ui } from "./ui.js";
 import { mainListeners } from "./listeners.js";
 import { Project } from "./core.js";
 
@@ -30,6 +29,5 @@ function getLocalStorage() {
     }
 }
 
-ui();
 mainListeners();
 getLocalStorage();
