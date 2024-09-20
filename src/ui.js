@@ -21,39 +21,62 @@ export const domMethods = {
             projectCard.appendChild(Object.assign(document.createElement("button"),
             {textContent: "Select Project", type: "button", className: "project-buttons select-project"}));
             document.querySelector(".projects-list").appendChild(projectCard);
-            listeners.uniqueListeners.projectButtons(projectCard, projects[i], i);
+            listeners.projectButtons(projectCard, projects[i], i);
         }
     },
 }
 
 export const listeners = {
-  mainListeners: function() {
-    document
-      .querySelector(".projects-buttons > button:first-child")
-      .addEventListener("click", function () {
-        let name = prompt("name");
-        if (name === null) return;
-        let tags = prompt("tags");
-        if (tags === null || tags === "") tags = [];
-        Project.createProject(name, tags);
-        console.log(Project.getProjectsList());
-        Project.setLocalStorage();
-      });
+  projectButtons: function (uiElement, project, index) {
+    uiElement
+    .querySelector(".add-task")
+    .addEventListener("click", () => {
+      project.createTask("test", "test test test", new Date());
+      Project.setLocalStorage();
+    });
+    uiElement
+    .querySelector(".rm-project")
+    .addEventListener("click", () => {
+      Project.removeProject(index);
+      Project.setLocalStorage();
+    });
+    uiElement.
+    querySelector(".select-project").
+    addEventListener("click", () => {
+      project.setCurrentProject();
+      Project.setLocalStorage();
+      console.log(Project.getCurrentProject());
+    });
   },
-  uniqueListeners: {
-    projectButtons: function (uiElement, project, index) {
-      uiElement
-      .querySelector(".add-task")
-      .addEventListener("click", () => {
-        project.createTask("test", "test test test", new Date());
-        Project.setLocalStorage();
-      });
-      uiElement
-      .querySelector(".rm-project")
-      .addEventListener("click", () => {
-        Project.removeProject(index);
-        Project.setLocalStorage();
-      });
-    },
+  projectModal: function() {
+    const dialog = document.querySelector(".add-project-modal");
+    document
+    .querySelector(".projects-buttons > button:first-child")
+    .addEventListener("click", () => {
+      dialog.showModal();
+    });
+    document
+    .querySelector(".add-project-modal > form > input[type=submit]")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+      let name = document
+      .querySelector("#project-name")
+      .value;
+      if (name === null || name === undefined || name === "") return;
+      let tags = document
+      .querySelector("#project-tags")
+      .value;
+      if (tags === null || tags === "" || tags === undefined) tags = [];
+      Project.createProject(name, tags);
+      console.log(Project.getProjectsList());
+      Project.setLocalStorage();
+      dialog.close();
+    });
+    document
+    .querySelector(".add-project-modal > form > input[type=button]")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+      dialog.close();
+    });
   }
 }
