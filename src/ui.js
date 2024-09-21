@@ -33,12 +33,14 @@ export const listeners = {
     .addEventListener("click", () => {
       project.createTask("test", "test test test", new Date());
       Project.setLocalStorage();
+      console.log(Project.getCurrentProject());
     });
     uiElement
     .querySelector(".rm-project")
     .addEventListener("click", () => {
       Project.removeProject(index);
       Project.setLocalStorage();
+      console.log(Project.getCurrentProject());
     });
     uiElement.
     querySelector(".select-project").
@@ -51,12 +53,12 @@ export const listeners = {
   projectModal: function() {
     const dialog = document.querySelector(".add-project-modal");
     document
-    .querySelector(".projects-buttons > button:first-child")
+    .querySelector(".projects-buttons button:first-child")
     .addEventListener("click", () => {
       dialog.showModal();
     });
     document
-    .querySelector(".add-project-modal > form > input[type=submit]")
+    .querySelector(".add-project-modal form input[type=submit]")
     .addEventListener("click", (e) => {
       e.preventDefault();
       let name = document
@@ -67,16 +69,22 @@ export const listeners = {
       .querySelector("#project-tags")
       .value;
       if (tags === null || tags === "" || tags === undefined) tags = [];
+      else {
+        tags = tags.trim().split(/\s,\s|\s,|,\s|,/ig);
+        console.log(tags);
+      }
       Project.createProject(name, tags);
       console.log(Project.getProjectsList());
       Project.setLocalStorage();
       dialog.close();
+      document.querySelector(".add-project-modal > form").reset();
     });
     document
-    .querySelector(".add-project-modal > form > input[type=button]")
+    .querySelector(".add-project-modal form input[type=button]")
     .addEventListener("click", (e) => {
       e.preventDefault();
       dialog.close();
+      document.querySelector(".add-project-modal form").reset();
     });
   }
 }
