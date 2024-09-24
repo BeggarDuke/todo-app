@@ -8,6 +8,8 @@ class Project {
   static #currentProject;
   // field "items" store all instances of class Task inside a project
   items = [];
+  // temporary tags system, later every tag should be an object with name and color keys.
+  // and all existing tags should be stored somewhere, to search by tags later.
   constructor(name, tags) {
     this.name = name;
     this.tags = tags;

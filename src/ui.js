@@ -65,6 +65,8 @@ export const listeners = {
       .querySelector("#project-name")
       .value;
       if (name === null || name === undefined || name === "") return;
+      // temporary tags system, later every tag should be an object with name and color keys.
+      // and all existing tags should be stored somewhere, to search by tags later.
       let tags = document
       .querySelector("#project-tags")
       .value;
