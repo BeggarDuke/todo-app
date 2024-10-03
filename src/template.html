@@ -17,9 +17,13 @@
         </div>
         <div class="task-container">
             <div class="task-header">
-
+              <div class="tasks-buttons">
+                <button type="button" class="sort-by">Sort By</button>
+                <button type="button" class="create-task">Create Task</button>
+                <button type="button" class="edit-tags">Edit Tags</button>
+              </div>
             </div>
-            <div class="task-board">
+            <div class="tasks-list">
 
             </div>
         </div>
@@ -30,8 +34,19 @@
         <input type="text" id="project-name" name="project-name">
         <label for="project-tags">Tags:</label>
         <input type="text" id="project-tags" name="project-tags">
-        <input type="submit" value="submit">
-        <input type="button" value="cancel">
+        <input type="submit" value="submit" class="submit">
+        <input type="button" value="cancel" class="cancel">
+      </form>
+    </dialog>
+    <dialog class="add-task-modal">
+      <form action="" method="post">
+        <label for="task-name">Name:</label>
+        <input type="text" id="task-name" name="task-name">
+        <label for="task-tags">Tags:</label>
+        <input type="text" id="task-tags" name="task-tags">
+        <input type="button" value="+" class="add-text-block">
+        <input type="submit" value="submit" class="submit">
+        <input type="button" value="cancel" class="cancel">
       </form>
     </dialog>
 </body>

@@ -148,4 +148,4 @@ class TextBlock {
   }
 }
 
-export { Project };
+export { Project, Task };
