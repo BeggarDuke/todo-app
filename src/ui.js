@@ -15,8 +15,6 @@ export const domMethods = {
             projectCard.appendChild(Object.assign(document.createElement("p"),
             {textContent: `${projects[i].tags}`}));
             projectCard.appendChild(Object.assign(document.createElement("button"),
-            {textContent: "Add task", type: "button", className: "project-buttons add-task"}));
-            projectCard.appendChild(Object.assign(document.createElement("button"),
             {textContent: "Remove project", type: "button", className: "project-buttons rm-project"}));
             projectCard.appendChild(Object.assign(document.createElement("button"),
             {textContent: "Select Project", type: "button", className: "project-buttons select-project"}));
@@ -38,12 +36,17 @@ export const domMethods = {
         {textContent: `${currentProjectList[i].name}`}));
         taskCard.appendChild(Object.assign(document.createElement("p"),
         {textContent: `${currentProjectList[i].tags}`}));
-        taskCard.appendChild(Object.assign(document.createElement("div"),
+        taskCard.appendChild(Object.assign(document.createElement("fieldset"),
         {className: "text-zone"}));
+        taskCard.appendChild(Object.assign(document.createElement("input"),
+        {type: "button", value: "Remove", className: "rm-task"}));
         for (let j=0; j<currentProjectList[i].list.length; j++) {
+          taskCard.querySelector(".text-zone").appendChild(Object.assign(document.createElement("input"),
+          {type: "checkbox"}));
           taskCard.querySelector(".text-zone").appendChild(Object.assign(document.createElement("p"),
           {textContent: `${currentProjectList[i].list[j].text}`}));
         }
+        listeners.taskButtons(taskCard, i);
         document.querySelector(".tasks-list").appendChild(taskCard);
       }
     }
@@ -52,15 +55,14 @@ export const domMethods = {
 export const listeners = {
   projectButtons: function (uiElement, project, index) {
     uiElement
-    .querySelector(".add-task")
-    .addEventListener("click", () => {
-      project.createTask("test", "test test test", new Date());
-      Project.setLocalStorage();
-      console.log(Project.getCurrentProject());
-    });
-    uiElement
     .querySelector(".rm-project")
     .addEventListener("click", () => {
+      if (Project.getProjectsList()[index] === Project.getCurrentProject()) {
+        const container = document.querySelector(".tasks-list");
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+      }
       Project.removeProject(index);
       Project.setLocalStorage();
       console.log(Project.getCurrentProject());
@@ -102,6 +104,7 @@ export const listeners = {
       Project.createProject(name, tags);
       console.log(Project.getProjectsList());
       Project.setLocalStorage();
+      domMethods.addProjectsCards(Project.getProjectsList());
       dialog.close();
       document.querySelector(".add-project-modal form").reset();
     });
@@ -113,11 +116,20 @@ export const listeners = {
       document.querySelector(".add-project-modal form").reset();
     });
   },
+  taskButtons: function(uiElement, index) {
+    uiElement
+    .querySelector(".rm-task")
+    .addEventListener("click", () => {
+      Project.removeTask(index);
+      Project.setLocalStorage();
+    });
+  },
   taskModal: function() {
     const dialog = document.querySelector(".add-task-modal");
     document
     .querySelector(".create-task")
     .addEventListener("click", () => {
+      if (!Project.getCurrentProject()) return;
       dialog.showModal();
     });
     document.querySelector(".add-text-block").addEventListener("click", () => {
@@ -156,6 +168,7 @@ export const listeners = {
       }
       console.log(Project.getProjectsList());
       Project.setLocalStorage();
+      domMethods.addTasksCards(Project.getCurrentProject().getTaskList());
       dialog.close();
       document.querySelector(".add-task-modal form").reset();
     });

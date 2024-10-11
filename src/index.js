@@ -4,5 +4,5 @@ import { Project } from "./core.js";
 
 listeners.projectModal();
 listeners.taskModal();
-Project.getLocalStorage();
-// localStorage.clear();
+// Project.getLocalStorage();
+localStorage.clear();

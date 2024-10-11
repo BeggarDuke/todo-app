@@ -17,6 +17,8 @@ class Project {
   static createProject(name, tags) {
     Project.getProjectsList().push(new Project(name, tags));
     domMethods.addProjectsCards(Project.getProjectsList());
+    Project.getProjectsList()[Project.getProjectsList().length-1]
+    .setCurrentProject();
   }
   static removeProject(project) {
     Project.getProjectsList().splice(project, 1);
@@ -32,6 +34,7 @@ class Project {
   }
   setCurrentProject() {
     Project.#currentProject = this;
+    domMethods.addTasksCards(Project.getCurrentProject());
   }
   static getLocalStorage() {
     // console.log(localStorage.getItem("projects"));
@@ -78,6 +81,10 @@ class Project {
   }
   createTask(name, tags, beginDate, endDate) {
     this.items.push(new Task(name, tags, beginDate, endDate));
+  }
+  static removeTask(index) {
+    Project.getCurrentProject().getTaskList().splice(index, 1);
+    domMethods.addTasksCards(Project.getCurrentProject().getTaskList());
   }
   editProject(newName, newTags) {
     if (newName === null) return;
